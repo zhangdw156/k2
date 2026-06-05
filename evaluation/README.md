@@ -31,3 +31,34 @@ python run_eval.py --model_name geollama --base_model /home/daven/llm/qokori/lla
 ```bash 
 python run_eval.py --model_name gpt2_xl --base_model gpt2-xl
 ```
+
+## vLLM / OpenAI-compatible endpoint
+
+If the model is already served by vLLM, use `run_eval_vllm.py` instead of
+`run_eval.py`. The script keeps the GeoBench objective-task evaluation style by
+asking the completions endpoint for one next-token answer among the valid labels
+(`A/B/C/...` or `True/False`).
+
+Example for a Qwen3 model served by vLLM:
+
+```bash
+python evaluation/run_eval_vllm.py \
+  --model qwen3-4b-instruct-2507 \
+  --base-url http://SERVER:8000/v1 \
+  --tokenizer Qwen/Qwen3-4B-Instruct-2507 \
+  --benchmark all \
+  --prompt-variant both
+```
+
+Useful smoke test before calling the endpoint:
+
+```bash
+python evaluation/run_eval_vllm.py \
+  --model qwen3-4b-instruct-2507 \
+  --tokenizer Qwen/Qwen3-4B-Instruct-2507 \
+  --benchmark npee \
+  --tasks choice \
+  --limit 2 \
+  --dry-run \
+  --print-sample-prompts 1
+```
