@@ -500,7 +500,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--limit", type=int, default=None, help="Limit number of selected examples")
     parser.add_argument("--offset", type=int, default=0, help="Skip selected examples before evaluating")
-    parser.add_argument("--max-tokens", type=int, default=1024, help="Maximum generated tokens per item")
+    parser.add_argument("--max-tokens", type=int, default=16384, help="Maximum generated tokens per item")
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--top-p", type=float, default=1.0)
     parser.add_argument("--timeout", type=float, default=120.0)
