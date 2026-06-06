@@ -106,3 +106,27 @@ uv run python evaluation/run_eval_vllm.py \
   --dry-run \
   --print-sample-prompts 1
 ```
+
+### Progress and score reporting
+
+Use the progress reporter while either vLLM path is running, or after it finishes:
+
+```bash
+uv run python scripts/report_eval_progress.py
+```
+
+Useful filters:
+
+```bash
+uv run python scripts/report_eval_progress.py --evaluator vllm_chat
+uv run python scripts/report_eval_progress.py --model qwen3-4b-instruct-2507 --no-splits
+uv run python scripts/report_eval_progress.py --json
+```
+
+The reporter scans `evaluation/results_vllm/` and `evaluation/results_vllm_chat/`,
+counts JSONL rows with a boolean `correct` field as completed, reports
+`correct/completed` accuracy, and for chat-completions runs also reports
+`parse_failed` and `invalid` parser counts.  Before a `summary_*.json` exists, it
+estimates expected totals from the full GeoBench scope encoded in the JSONL
+filename, so runs launched with `--tasks`, `--limit`, or `--offset` may need that
+scope caveat when interpreting progress.
