@@ -32,17 +32,58 @@ python run_eval.py --model_name geollama --base_model /home/daven/llm/qokori/lla
 python run_eval.py --model_name gpt2_xl --base_model gpt2-xl
 ```
 
-## vLLM / OpenAI-compatible endpoint
+## vLLM / OpenAI-compatible endpoints
 
 This is the recommended lightweight workflow for this checkout. After cloning on
 a server, run `uv sync` once, then run evaluator commands with `uv run`.
 
-If the model is already served by vLLM, use `run_eval_vllm.py` instead of
-`run_eval.py`. The script keeps the GeoBench objective-task evaluation style by
-asking the completions endpoint for one next-token answer among the valid labels
-(`A/B/C/...` or `True/False`).
+There are two independent vLLM evaluation paths:
 
-Example for a Qwen3 model served by vLLM:
+1. `run_eval_vllm.py` keeps the original GeoBench objective-task style by asking
+   the completions endpoint for one next-token answer among the valid labels
+   (`A/B/C/...` or `True/False`) with logprobs and `allowed_token_ids`.
+2. `run_eval_vllm_chat.py` uses the OpenAI Python SDK `chat.completions` API,
+   generates a full response, strips any text before the final `</think>` tag,
+   parses the answer label, and compares it with the GeoBench ground truth.
+
+### Chat-completions evaluator
+
+Use this path for modern chat or thinking models served by vLLM:
+
+```bash
+uv run python evaluation/run_eval_vllm_chat.py \
+  --model qwen3-4b-instruct-2507 \
+  --base-url http://SERVER:8000/v1 \
+  --benchmark all \
+  --prompt-variant both
+```
+
+Useful smoke test before calling the endpoint:
+
+```bash
+uv run python evaluation/run_eval_vllm_chat.py \
+  --model qwen3-4b-instruct-2507 \
+  --benchmark npee \
+  --tasks choice \
+  --limit 2 \
+  --dry-run \
+  --print-sample-prompts 1
+```
+
+`--prompt-variant woa` keeps the original no-answer-prefix prompt ending in
+`### Response:`. `--prompt-variant wa` keeps the original answer-prefix prompt
+ending with:
+
+```text
+### Response:
+The answer is:
+```
+
+`both` runs both variants.
+
+### Next-token logprob evaluator
+
+Use this path when you want the old constrained next-token scoring behavior:
 
 ```bash
 uv run python evaluation/run_eval_vllm.py \
