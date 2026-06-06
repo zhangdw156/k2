@@ -1,0 +1,32 @@
+{
+  "npee/choice/woa": {
+    "correct": 94,
+    "total": 182,
+    "accuracy": 0.5164835164835165
+  },
+  "npee/tf/woa": {
+    "correct": 76,
+    "total": 134,
+    "accuracy": 0.5671641791044776
+  },
+  "apstudy/choice/woa": {
+    "correct": 1066,
+    "total": 1395,
+    "accuracy": 0.76415770609319
+  },
+  "npee/choice/wa": {
+    "correct": 93,
+    "total": 182,
+    "accuracy": 0.510989010989011
+  },
+  "npee/tf/wa": {
+    "correct": 79,
+    "total": 134,
+    "accuracy": 0.5895522388059702
+  },
+  "apstudy/choice/wa": {
+    "correct": 1061,
+    "total": 1395,
+    "accuracy": 0.760573476702509
+  }
+}
