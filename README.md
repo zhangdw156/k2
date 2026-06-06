@@ -40,11 +40,17 @@ cd k2
 uv sync
 ```
 
-This repository is now configured for the common server-side evaluation workflow:
-running `evaluation/run_eval_vllm.py` against an already deployed vLLM/OpenAI-compatible
-model endpoint. The default uv environment intentionally installs only the tokenizer
-stack needed by that evaluator, rather than the legacy training/LoRA stack. Use
+This repository is now configured for server-side GeoBench evaluation against
+already deployed vLLM/OpenAI-compatible model endpoints. The default uv
+environment intentionally installs only the lightweight evaluation stack needed
+by the vLLM evaluators, rather than the legacy training/LoRA stack. Use
 `uv run ...` for commands inside the synced environment.
+
+Two vLLM evaluation paths are available:
+- `evaluation/run_eval_vllm.py`: the original next-token logprob evaluator.
+- `evaluation/run_eval_vllm_chat.py`: a chat-completions evaluator that generates
+  full responses, strips any text before the final `</think>` tag, parses the
+  answer label, and scores it against the GeoBench ground truth.
 
 The old `k2.yaml` remains as a historical reference for the full training/local-model
 environment, but it is no longer required for vLLM evaluation.
