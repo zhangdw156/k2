@@ -1,0 +1,13 @@
+[project]
+name = "k2-geobench-eval"
+version = "0.1.0"
+description = "Minimal uv environment for evaluating deployed vLLM models on K2 GeoBench."
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "sentencepiece>=0.2.0",
+    "transformers>=4.52,<5",
+]
+
+[tool.uv]
+package = false

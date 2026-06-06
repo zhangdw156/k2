@@ -32,13 +32,22 @@ In this repository, we will share the following code and data.
 
 **1. Prepare the code and the environment**
 
-Clone our repository, create a Python environment, and activate it via the following command
+Clone the repository and sync the lightweight uv environment:
+
 ```bash
 git clone https://github.com/davendw49/k2.git
 cd k2
-conda env create -f k2.yaml
-conda activate k2
+uv sync
 ```
+
+This repository is now configured for the common server-side evaluation workflow:
+running `evaluation/run_eval_vllm.py` against an already deployed vLLM/OpenAI-compatible
+model endpoint. The default uv environment intentionally installs only the tokenizer
+stack needed by that evaluator, rather than the legacy training/LoRA stack. Use
+`uv run ...` for commands inside the synced environment.
+
+The old `k2.yaml` remains as a historical reference for the full training/local-model
+environment, but it is no longer required for vLLM evaluation.
 
 **2. Prepare the pretrained K2 (GeoLLaMA)**
 

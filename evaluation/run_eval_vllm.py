@@ -28,7 +28,7 @@ Quick endpoint smoke test:
     curl http://SERVER:8000/v1/models
 
 Dry-run without calling the endpoint:
-    python evaluation/run_eval_vllm.py \
+    uv run python evaluation/run_eval_vllm.py \
       --model qwen3-4b-instruct-2507 \
       --tokenizer Qwen/Qwen3-4B-Instruct-2507 \
       --benchmark npee \
@@ -38,7 +38,7 @@ Dry-run without calling the endpoint:
       --print-sample-prompts 1
 
 Evaluate all objective GeoBench subsets:
-    python evaluation/run_eval_vllm.py \
+    uv run python evaluation/run_eval_vllm.py \
       --model qwen3-4b-instruct-2507 \
       --base-url http://SERVER:8000/v1 \
       --tokenizer Qwen/Qwen3-4B-Instruct-2507 \
@@ -46,7 +46,7 @@ Evaluate all objective GeoBench subsets:
       --prompt-variant both
 
 Evaluate NPEE only:
-    python evaluation/run_eval_vllm.py \
+    uv run python evaluation/run_eval_vllm.py \
       --model qwen3-4b-instruct-2507 \
       --base-url http://SERVER:8000/v1 \
       --tokenizer Qwen/Qwen3-4B-Instruct-2507 \
@@ -55,7 +55,7 @@ Evaluate NPEE only:
       --prompt-variant both
 
 Evaluate APStudy only:
-    python evaluation/run_eval_vllm.py \
+    uv run python evaluation/run_eval_vllm.py \
       --model qwen3-4b-instruct-2507 \
       --base-url http://SERVER:8000/v1 \
       --tokenizer Qwen/Qwen3-4B-Instruct-2507 \
